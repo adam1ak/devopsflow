@@ -10,6 +10,8 @@ from app.core.database import Base
 
 if TYPE_CHECKING:
     from app.models.user import User
+    from app.models.deployment import Deployment
+    from app.models.health_check import HealthCheck
 
 class ProjectStatus(str, enum.Enum):
     """Enum representing current health or deployment state of a project."""
@@ -65,4 +67,16 @@ class Project(Base):
     owner: Mapped["User"] = relationship(
         "User",
         back_populates="projects"
+    )
+
+    deployments: Mapped[list["Deployment"]] = relationship(
+        "Deployment",
+        back_populates="project",
+        cascade="all, delete-orphan"
+    )
+
+    health_checks: Mapped[list["HealthCheck"]] = relationship(
+        "HealthCheck",
+        back_populates="project",
+        cascade="all, delete-orphan"
     )
