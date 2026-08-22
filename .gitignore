@@ -14,3 +14,5 @@ dist/
 .vscode/
 .idea/
 .DS_Store
+
+development_roadmap.md
